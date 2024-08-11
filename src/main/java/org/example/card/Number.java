@@ -1,7 +1,6 @@
 package org.example.card;
 
 public enum Number {
-    AS(14),
     KING(13),
     QUEEN(12),
     WALET(11),
@@ -13,7 +12,8 @@ public enum Number {
     FIVE(5),
     FOUR(4),
     THREE(3),
-    TWO(2);
+    TWO(2),
+    AS(1);
 
     private final int i;
     Number(int i)  {

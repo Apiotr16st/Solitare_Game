@@ -11,7 +11,7 @@ public class TableBar {
     public TableBar(ArrayList<Card> cards) {
         this.stacks = new ArrayList<TableStack>();
         for (int i = 0; i < 7; i++) {
-            this.stacks.add(new TableStack());
+            this.stacks.add(new TableStack(i));
         }
 
         int cardIndex = 0;

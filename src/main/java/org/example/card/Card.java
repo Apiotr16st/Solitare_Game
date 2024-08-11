@@ -19,6 +19,15 @@ public class Card implements ICard {
     public boolean getIsHidden() {
         return this.isHidden;
     }
+
+    @Override
+    public boolean colorCompare(ICard cardTo) {
+        return switch (this.color) {
+            case PIK, TREFL -> cardTo.getColor() == Color.KARO  || cardTo.getColor() == Color.KIER;
+            case KARO, KIER -> cardTo.getColor() == Color.PIK || cardTo.getColor() == Color.TREFL;
+        };
+    }
+
     public Card(Number number, Color color) {
         this.number = number;
         this.color = color;

@@ -1,7 +1,5 @@
 package org.example;
 
-import java.awt.*;
-import java.util.Objects;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +10,7 @@ public class App extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("menu.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("app.fxml"));
         BorderPane viewRoot = loader.load();
         configureStage(primaryStage, viewRoot);
         primaryStage.show();

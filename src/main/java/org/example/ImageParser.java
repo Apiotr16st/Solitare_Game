@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class ImageParser {
     public static String parseImage(ICard card){
-        String res= "";
+        String res;
         switch (card.getNumber()){
             case AS:
                 res = "A";
@@ -55,16 +55,16 @@ public class ImageParser {
 
         switch (card.getColor()){
             case PIK:
-                res += "H";
+                res += "S";
                 break;
             case KIER:
-                res += "D";
+                res += "H";
                 break;
             case TREFL:
                 res += "C";
                 break;
             case KARO:
-                res += "S";
+                res += "D";
                 break;
             default:
                 res += "ERROR";

@@ -7,9 +7,11 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 public class TableStack {
+    private int stackNumber;
     private Collection<ICard> cards;
 
-    public TableStack() {
+    public TableStack(int stackNumber) {
+        this.stackNumber = stackNumber;
         this.cards = new ArrayList<ICard>();
     }
 

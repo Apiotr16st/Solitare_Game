@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import org.example.card.CardImage;
 import org.example.card.ICard;
 import org.example.bar.stack.TableStack;
 
@@ -21,11 +22,16 @@ import java.util.ResourceBundle;
 public class GameController implements Initializable {
     public HBox stackPanes;
     public HBox usedStacks;
+    private CardImage clicked = null;
+    private GameLogic game = new GameLogic();
+    private ArrayList<TableStack> tb = game.getTable();
 
     public void initialize(URL location, ResourceBundle resources){
-        GameLogic gameLogic = new GameLogic();
-        ArrayList<TableStack> tb = gameLogic.getTable();
+        drawApp();
+    }
 
+    private void drawApp(){
+        this.tb = game.getTable();
         for (int i=0; i<7; i++){
             TableStack stack = tb.get(i);
             Collection<ICard> cards = stack.getCards();
@@ -34,32 +40,24 @@ public class GameController implements Initializable {
             StackPane stackPane = new StackPane();
 
             for (ICard card : cards){
-                Image img;
-                int flag;
+                CardImage cardImage = new CardImage(card);
+                cardImage.setMovment(movment);
+                ImageView view = cardImage.getView();
+                int isHidden = 1;
                 if(iter != i){
-                    img = new Image(Objects.requireNonNull(GameController.class.getResource("/images/red_back.png")).toExternalForm());
-                    flag  =  0;
+                    isHidden  =  0;
+                    cardImage.flip();
                 }
-                else {
-                    img = new Image(Objects.requireNonNull(GameController.class.getResource(ImageParser.parseImage(card))).toExternalForm());
-                    flag  =  1;
-                }
-
-                ImageView imageView = new ImageView(img);
-                imageView.setFitWidth(150);
-                imageView.setFitHeight(150);
-                imageView.setPreserveRatio(true);
-                imageView.setTranslateY(movment);
-                if(flag==1){
-                    imageView.setOnMouseClicked(e -> {
-                        border(imageView);
-
+                if(isHidden==1){
+                    view.setOnMouseClicked(e -> {
+                        cardClicked(cardImage);
                     });
-                    imageView.setCursor(Cursor.HAND);
+                    view.setCursor(Cursor.HAND);
                 }
                 movment += 20;
                 iter++;
-                stackPane.getChildren().add(imageView);
+
+                stackPane.getChildren().add(view);
             }
             stackPanes.getChildren().add(stackPane);
         }
@@ -78,8 +76,20 @@ public class GameController implements Initializable {
         }
     }
 
-    private void border(ImageView imageView){
-        imageView.setStyle("-fx-border-color: red; -fx-border-width: 50px;"); // NIE DZIAlA
-        System.out.println("Clicked");
+    private void cardClicked(CardImage cardImage){
+        if(clicked == cardImage){
+            clicked.getView().setOpacity(1);
+            clicked = null;
+        }
+        else if(clicked == null){
+            clicked = cardImage;
+            cardImage.getView().setOpacity(0.8);
+        }
+        else{
+            game.moveCard(clicked, cardImage);
+            clicked.getView().setOpacity(1);
+            clicked = null;
+//            drawApp();
+        }
     }
 }

@@ -4,4 +4,5 @@ public interface ICard {
     public Color getColor();
     public Number getNumber();
     public boolean getIsHidden();
+    boolean colorCompare(ICard cardTo);
 }
