@@ -2,6 +2,7 @@ package org.example.bar;
 
 import org.example.card.Card;
 import org.example.bar.stack.TableStack;
+import org.example.card.ICard;
 
 import java.util.ArrayList;
 
@@ -18,8 +19,8 @@ public class TableBar {
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < i + 1; j++) {
-                if(j != i) {
-                    cards.get(cardIndex).setHidden(true);
+                if(j == i) {
+                    cards.get(cardIndex).setHiddnes(false);
                 }
                 this.stacks.get(i).addCard(cards.get(cardIndex));
                 cardIndex++;
@@ -41,5 +42,27 @@ public class TableBar {
                 + stacks.get(4) + "\n"
                 + stacks.get(5) + "\n"
                 + stacks.get(6) + "\n";
+    }
+
+    public boolean searchCard(ICard cardMoved) {
+        for (TableStack stack : stacks) {
+            if (stack.getCards().contains(cardMoved)) {
+                stack.getCards().remove(cardMoved);
+                if(stack.getLastCard() != null){
+                    stack.getLastCard().setHiddnes(false);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public TableStack searchStack(ICard cardTo) {
+        for (TableStack stack : stacks) {
+            if (stack.getCards().contains(cardTo)) {
+                return stack;
+            }
+        }
+        return null;
     }
 }

@@ -4,7 +4,6 @@ import org.example.card.ICard;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 
 public class TableStack {
     private int stackNumber;
@@ -28,5 +27,13 @@ public class TableStack {
         return "TableStack{" +
                 "cards=" + cards.toString() +
                 '}';
+    }
+
+    public ICard getLastCard() {
+        ArrayList<ICard> list = new ArrayList<>(cards);
+        if(list.isEmpty()){
+            return null;
+        }
+        return list.get(list.size() - 1);
     }
 }

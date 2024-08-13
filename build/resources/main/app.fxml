@@ -5,11 +5,13 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="850.0" minWidth="850.0"
+            minHeight="950.0" minWidth="1250.0"
             fx:controller="org.example.GameController" style="-fx-background-color: green">
     <top>
         <VBox alignment="CENTER" spacing="10">
             <HBox alignment="CENTER" fx:id="usedStacks" spacing="10" >
+            </HBox>
+            <HBox alignment="CENTER" fx:id="toUseStack" spacing="10" >
             </HBox>
         </VBox>
 <!--        <VBox alignment="CENTER" spacing="10">-->

@@ -1,8 +1,10 @@
 package org.example.card;
 
 public interface ICard {
-    public Color getColor();
-    public Number getNumber();
-    public boolean getIsHidden();
+    Color getColor();
+    Number getNumber();
+    boolean isHidden();
+    void setHiddnes(boolean isHidden);
     boolean colorCompare(ICard cardTo);
+    CardImage getCardImage();
 }

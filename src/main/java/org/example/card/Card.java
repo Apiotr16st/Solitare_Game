@@ -2,6 +2,7 @@ package org.example.card;
 
 public class Card implements ICard {
     private final Number number;
+    private final CardImage cardImage;
     private final Color color;
     private boolean isHidden;
 
@@ -16,7 +17,7 @@ public class Card implements ICard {
     }
 
     @Override
-    public boolean getIsHidden() {
+    public boolean isHidden() {
         return this.isHidden;
     }
 
@@ -28,21 +29,23 @@ public class Card implements ICard {
         };
     }
 
+    @Override
+    public CardImage getCardImage() {
+        return this.cardImage;
+    }
+
     public Card(Number number, Color color) {
         this.number = number;
         this.color = color;
-        this.isHidden = false;
+        this.isHidden = true;
+        this.cardImage = new CardImage(this);
     }
 
-    public Card(Number number, Color color, boolean isHidden) {
-        this.number = number;
-        this.color = color;
+    public void setHiddnes(boolean isHidden) {
         this.isHidden = isHidden;
+        cardImage.setHidden(isHidden);
     }
 
-    public void setHidden(boolean isHidden) {
-        this.isHidden = isHidden;
-    }
 
     @Override
     public String toString() {
