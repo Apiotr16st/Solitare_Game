@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class Tail {
-    private ArrayList<Card> cards;
+    private ArrayList<ICard> cards;
 
     public Tail(){
         this.cards = new ArrayList<>();
@@ -20,11 +20,11 @@ public class Tail {
         Collections.shuffle(this.cards);
     }
 
-    public Collection<Card> getCards(int i) {
-        Iterator<Card> iterator = cards.iterator();
-        Collection<Card> removed_cards = new ArrayList<>();
+    public Collection<ICard> getCards(int i) {
+        Iterator<ICard> iterator = cards.iterator();
+        Collection<ICard> removed_cards = new ArrayList<>();
         while (iterator.hasNext() && i > 0) {
-            Card card = iterator.next();
+            ICard card = iterator.next();
             removed_cards.add(card);
             iterator.remove();
             i--;
@@ -32,8 +32,8 @@ public class Tail {
         return removed_cards;
     }
 
-    public Collection<Card> getCards() {
-        Collection<Card> removed_cards = new ArrayList<>(cards);
+    public Collection<ICard> getCards() {
+        Collection<ICard> removed_cards = new ArrayList<>(cards);
         cards.clear();
         return removed_cards;
     }

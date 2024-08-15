@@ -18,7 +18,7 @@ public class GameLogic {
 
     public GameLogic() {
         Tail tail = new Tail();
-        this.tableBar = new TableBar((ArrayList<Card>) tail.getCards(28));
+        this.tableBar = new TableBar((ArrayList<ICard>) tail.getCards(28));
         this.leftBar = new LeftBar(tail.getCards());
         this.usedBar = new UsedBar();
     }
@@ -44,11 +44,11 @@ public class GameLogic {
         leftBar.nextCard();
     }
 
-    public Card getFirstRightCard(){
+    public ICard getFirstRightCard(){
         return leftBar.getFirstRightCard();
     }
 
-    public boolean isToUseEmpty(){
-        return leftBar.isEmpty();
+    public ICard getLeftStack(){
+        return leftBar.getLeftStack();
     }
 }

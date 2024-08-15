@@ -2,6 +2,7 @@ package org.example.bar;
 
 import org.example.card.Card;
 import org.example.bar.stack.TableStack;
+import org.example.card.EmptyCard;
 import org.example.card.ICard;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class TableBar {
     ArrayList<TableStack> stacks;
 
-    public TableBar(ArrayList<Card> cards) {
+    public TableBar(ArrayList<ICard> cards) {
         this.stacks = new ArrayList<TableStack>();
         for (int i = 0; i < 7; i++) {
             this.stacks.add(new TableStack(i));

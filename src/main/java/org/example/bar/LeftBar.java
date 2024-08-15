@@ -1,53 +1,60 @@
 package org.example.bar;
 
-import org.example.card.Card;
+import org.example.card.EmptyCard;
 import org.example.card.ICard;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Stack;
 
 public class LeftBar {
-    private ArrayList<Card> toUse;
-    private ArrayList<Card> rightCards = new ArrayList<>();
+    private final Stack<ICard> toUse;
+    private final Stack<ICard> rightCards = new Stack<>();
 
 
-    public LeftBar(Collection<Card> list) {
-        this.toUse = new ArrayList<>(list);
+
+    public LeftBar(Collection<ICard> list) {
+        toUse = new Stack<>();
+        toUse.push(new EmptyCard());
+        for (ICard card : list) {
+            toUse.push(card);
+        }
+        rightCards.add(new EmptyCard());
     }
 
     public void nextCard(){
-        if(toUse.isEmpty()){
+        if(toUse.size() == 1){
             reschuffle();
         }
         else {
-            Card card = toUse.get(0);
+            ICard card = toUse.pop();
             card.setHiddnes(false);
-            if(!rightCards.isEmpty()){
-                rightCards.get(rightCards.size()-1).setHiddnes(false);
-            }
-            rightCards.add(card);
-            toUse.remove(0);
+            rightCards.push(card);
         }
     }
 
-    public Card getFirstRightCard(){
-        if(rightCards.isEmpty()){
-            return null;
-        }
+    public ICard getFirstRightCard(){
         return rightCards.get(rightCards.size()-1);
     }
 
+    public ICard getLeftStack(){
+        return toUse.get(toUse.size()-1);
+    }
+
     public boolean isEmpty() {
-        return toUse.isEmpty();
+        return toUse.size()==1;
     }
 
     private void reschuffle(){
-        toUse = new ArrayList<>(rightCards);
-        rightCards.clear();
+        int size = rightCards.size();
+        for (int i=0; i<size-1; i++){
+            ICard card = rightCards.pop();
+            card.setHiddnes(true);
+            toUse.push(card);
+        }
     }
 
     public boolean searchCard(ICard cardMoved) {
-        for (Card card : rightCards) {
+        for (ICard card : rightCards) {
             if (card.equals(cardMoved)) {
                 rightCards.remove(card);
                 return true;

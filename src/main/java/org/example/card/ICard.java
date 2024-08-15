@@ -6,5 +6,5 @@ public interface ICard {
     boolean isHidden();
     void setHiddnes(boolean isHidden);
     boolean colorCompare(ICard cardTo);
-    CardImage getCardImage();
+    ICardImage getCardImage();
 }

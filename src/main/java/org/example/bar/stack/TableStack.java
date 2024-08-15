@@ -1,5 +1,6 @@
 package org.example.bar.stack;
 
+import org.example.card.EmptyCard;
 import org.example.card.ICard;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ public class TableStack {
 
     public TableStack(int stackNumber) {
         this.stackNumber = stackNumber;
-        this.cards = new ArrayList<ICard>();
+        this.cards = new ArrayList<>();
+        this.cards.add(new EmptyCard());
     }
 
     public Collection<ICard> getCards() {

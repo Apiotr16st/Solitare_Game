@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import org.example.ImageController;
 
 
-public class CardImage {
+public class CardImage implements ICardImage {
     private final ImageView view;
     private final Image front;
     private final Image back;
