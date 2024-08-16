@@ -28,7 +28,7 @@ public class GameLogic {
     }
 
     public void moveCard(ICard cardTo, ICard cardMoved) {
-        if (cardMoved.getNumber().getI() + 1 == cardTo.getNumber().getI()  && cardMoved.colorCompare(cardTo)) {
+        if (cardMoved.getNumber().getI() + 1 == cardTo.getNumber().getI()  && cardTo.colorCompare(cardMoved)) {
             if( tableBar.searchCard(cardMoved)){
                 TableStack stack = tableBar.searchStack(cardTo);
                 stack.addCard(cardMoved);

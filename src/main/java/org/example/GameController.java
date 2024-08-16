@@ -68,6 +68,7 @@ public class GameController implements Initializable {
                 movment += 20;
                 if(base==1){
                     movment = 0;
+                    extra = 0;
                 }
                 movment += extra;
                 pane.getChildren().add(view);

@@ -8,18 +8,18 @@ public class EmptyCard implements ICard{
 
     public EmptyCard() {
         this.cardImage = new EmptyCardImage();
-        this.number = null;
-        this.color = null;
+        this.number = Number.EMPTY;
+        this.color = Color.GRAY;
     }
 
     @Override
     public Color getColor() {
-        return null;
+        return this.color;
     }
 
     @Override
     public Number getNumber() {
-        return null;
+        return this.number;
     }
 
     @Override

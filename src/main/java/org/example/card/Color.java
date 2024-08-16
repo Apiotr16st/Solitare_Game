@@ -4,7 +4,8 @@ public enum Color {
     PIK(1),
     KIER(2),
     TREFL(3),
-    KARO(4);
+    KARO(4),
+    GRAY(5);
 
     private final int i;
     Color(int i)  {

@@ -1,6 +1,7 @@
 package org.example.card;
 
 public enum Number {
+    EMPTY(14),
     KING(13),
     QUEEN(12),
     WALET(11),

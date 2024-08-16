@@ -12,7 +12,7 @@ public class Tail {
         this.cards = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 13; j++){
+            for (int j = 1; j < 14; j++){
                 Card card = new Card(Number.values()[j], Color.values()[i]);
                 this.cards.add(card);
             }

@@ -22,10 +22,11 @@ public class Card implements ICard {
     }
 
     @Override
-    public boolean colorCompare(ICard cardTo) {
+    public boolean colorCompare(ICard cardMoved) {
         return switch (this.color) {
-            case PIK, TREFL -> cardTo.getColor() == Color.KARO  || cardTo.getColor() == Color.KIER;
-            case KARO, KIER -> cardTo.getColor() == Color.PIK || cardTo.getColor() == Color.TREFL;
+            case PIK, TREFL -> cardMoved.getColor() == Color.KARO  || cardMoved.getColor() == Color.KIER;
+            case KARO, KIER -> cardMoved.getColor() == Color.PIK || cardMoved.getColor() == Color.TREFL;
+            case GRAY -> true;
         };
     }
 
