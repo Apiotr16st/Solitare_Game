@@ -24,6 +24,21 @@ public class TableStack {
         this.cards.add(card);
     }
 
+    public Collection<ICard> getCardsFrom(ICard card) {
+        ArrayList<ICard> list = new ArrayList<>();
+        int i =0;
+        for (ICard c : cards) {
+            if (c.equals(card)) {
+                i = 1;
+                list.add(c);
+            }
+            else if (i == 1) {
+                list.add(c);
+            }
+        }
+        return list;
+    }
+
     @Override
     public String toString() {
         return "TableStack{" +
@@ -37,5 +52,9 @@ public class TableStack {
             return null;
         }
         return list.get(list.size() - 1);
+    }
+
+    public void removeCard(ICard card) {
+        this.cards.remove(card);
     }
 }

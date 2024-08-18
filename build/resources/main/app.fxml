@@ -13,20 +13,8 @@
             </HBox>
             <HBox alignment="CENTER" fx:id="toUseStack" spacing="10" >
             </HBox>
-        </VBox>
-<!--        <VBox alignment="CENTER" spacing="10">-->
-<!--            <HBox alignment="CENTER">-->
-<!--                <Label text=" Stack to use " alignment="CENTER" style="-fx-font-weight: bold;"/>-->
-<!--                <Label text=" Stack wasted " alignment="CENTER" style="-fx-font-weight: bold;"/>-->
-<!--            </HBox>-->
-<!--        </VBox>-->
-    </top>
-
-    <center>
-        <VBox alignment="CENTER" spacing="10">
-            <HBox alignment="CENTER" spacing="20" fx:id="stackPanes">
-
+            <HBox alignment="CENTER" fx:id="stackPanes" spacing="20">
             </HBox>
         </VBox>
-    </center>
+    </top>
 </BorderPane>

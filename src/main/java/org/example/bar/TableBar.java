@@ -48,10 +48,6 @@ public class TableBar {
     public boolean searchCard(ICard cardMoved) {
         for (TableStack stack : stacks) {
             if (stack.getCards().contains(cardMoved)) {
-                stack.getCards().remove(cardMoved);
-                if(stack.getLastCard() != null){
-                    stack.getLastCard().setHiddnes(false);
-                }
                 return true;
             }
         }

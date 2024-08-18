@@ -31,7 +31,14 @@ public class GameLogic {
         if (cardMoved.getNumber().getI() + 1 == cardTo.getNumber().getI()  && cardTo.colorCompare(cardMoved)) {
             if( tableBar.searchCard(cardMoved)){
                 TableStack stack = tableBar.searchStack(cardTo);
-                stack.addCard(cardMoved);
+                TableStack stackMoved = tableBar.searchStack(cardMoved);
+                for(ICard card : stackMoved.getCardsFrom(cardMoved)){
+                    stackMoved.removeCard(card);
+                    if(stackMoved.getLastCard() != null){
+                        stackMoved.getLastCard().setHiddnes(false);
+                    }
+                    stack.addCard(card);
+                }
             }
             else if (leftBar.searchCard(cardMoved)) {
                 TableStack stack = tableBar.searchStack(cardTo);
