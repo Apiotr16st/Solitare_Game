@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class TableStack {
-    private int stackNumber;
     private Collection<ICard> cards;
 
-    public TableStack(int stackNumber) {
-        this.stackNumber = stackNumber;
+    public TableStack() {
         this.cards = new ArrayList<>();
         this.cards.add(new EmptyCard());
     }
@@ -20,7 +18,22 @@ public class TableStack {
         return cards;
     }
 
-    public void addCard(ICard card) {
+    public boolean addCard(ICard card) {
+        if(this.cards.size() == 1 && card.getNumber().getI() == 13){
+            return this.cards.add(card);
+        }
+        else if(this.cards.size() == 1){
+            return false;
+        }
+        else if(getLastCard().getNumber().getI() - 1 == card.getNumber().getI() && getLastCard().colorCompare(card)){
+            return this.cards.add(card);
+        }
+        else{
+            return false;
+        }
+    }
+
+    public void addCardToStart(ICard card) {
         this.cards.add(card);
     }
 
@@ -56,5 +69,6 @@ public class TableStack {
 
     public void removeCard(ICard card) {
         this.cards.remove(card);
+        getLastCard().setHiddnes(false);
     }
 }

@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import org.example.bar.stack.FinalStack;
 import org.example.card.Card;
 import org.example.card.EmptyCard;
 import org.example.card.ICard;
@@ -26,6 +27,7 @@ public class GameController implements Initializable {
     private ArrayList<TableStack> tb = game.getTable();
     private final StackPane toUsePane = new StackPane();
     private final StackPane rightCardPane = new StackPane() ;
+    private final ArrayList<FinalStack> finalStacks = game.getFinalStacks();
 
     public void initialize(URL location, ResourceBundle resources){
         drawApp();
@@ -80,8 +82,15 @@ public class GameController implements Initializable {
     private void drawTopCards(){
         for (int i=0; i<4; i++){
             StackPane pane = new StackPane();
-            EmptyCard emptyCard = new EmptyCard();
-            pane.getChildren().add(emptyCard.getCardImage().getView());
+            FinalStack stack = finalStacks.get(i);
+
+            ImageView view = stack.getUpCard().getCardImage().getView();
+            view.setOnMouseClicked(e -> {
+                view.setCursor(Cursor.HAND);
+                cardClicked(stack.getUpCard());
+            });
+
+            pane.getChildren().add(view);
             usedStacks.getChildren().add(pane);
         }
     }
@@ -89,12 +98,6 @@ public class GameController implements Initializable {
     private void drawToUseStack(){
         ImageView toUse = game.getLeftStack().getCardImage().getView();
         ImageView rightCard = game.getFirstRightCard().getCardImage().getView();
-
-        toUse.setFitWidth(130);
-        rightCard.setFitWidth(130);
-
-        toUse.setPreserveRatio(true);
-        rightCard.setPreserveRatio(true);
 
         toUse.setOnMouseClicked(e -> {
             toUseStackClicked();
@@ -115,6 +118,9 @@ public class GameController implements Initializable {
     }
 
     private void cardClicked(ICard cardImage){
+        if(cardImage instanceof EmptyCard && clicked == null){
+            return;
+        }
         if(clicked == cardImage){
             clicked.getCardImage().getView().setOpacity(1);
             clicked = null;
@@ -124,7 +130,15 @@ public class GameController implements Initializable {
             cardImage.getCardImage().getView().setOpacity(0.8);
         }
         else{
-            game.moveCard(cardImage, clicked);
+            try{
+                game.moveCard(cardImage, clicked);
+            }
+            catch (IllegalArgumentException e){
+                clicked.getCardImage().getView().setOpacity(1);
+                clicked = null;
+                return;
+            }
+
             clicked.getCardImage().getView().setOpacity(1);
             clicked = null;
             drawApp();
@@ -132,6 +146,10 @@ public class GameController implements Initializable {
     }
 
     private void toUseStackClicked(){
+        if(clicked != null){
+            clicked.getCardImage().getView().setOpacity(1);
+            clicked = null;
+        }
         game.nextCard();
         drawApp();
     }

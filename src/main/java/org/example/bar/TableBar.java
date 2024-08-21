@@ -8,12 +8,12 @@ import org.example.card.ICard;
 import java.util.ArrayList;
 
 public class TableBar {
-    ArrayList<TableStack> stacks;
+    private final ArrayList<TableStack> stacks;
 
     public TableBar(ArrayList<ICard> cards) {
-        this.stacks = new ArrayList<TableStack>();
+        this.stacks = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            this.stacks.add(new TableStack(i));
+            this.stacks.add(new TableStack());
         }
 
         int cardIndex = 0;
@@ -23,7 +23,7 @@ public class TableBar {
                 if(j == i) {
                     cards.get(cardIndex).setHiddnes(false);
                 }
-                this.stacks.get(i).addCard(cards.get(cardIndex));
+                this.stacks.get(i).addCardToStart(cards.get(cardIndex));
                 cardIndex++;
             }
         }

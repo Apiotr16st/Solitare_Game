@@ -56,10 +56,14 @@ public class LeftBar {
     public boolean searchCard(ICard cardMoved) {
         for (ICard card : rightCards) {
             if (card.equals(cardMoved)) {
-                rightCards.remove(card);
+//                rightCards.remove(card);
                 return true;
             }
         }
         return false;
+    }
+
+    public void removeCard(ICard cardMoved) {
+        rightCards.remove(cardMoved);
     }
 }
