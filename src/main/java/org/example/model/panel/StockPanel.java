@@ -1,19 +1,16 @@
-package org.example.bar;
+package org.example.model.panel;
 
-import org.example.card.EmptyCard;
-import org.example.card.ICard;
+import org.example.model.card.EmptyCard;
+import org.example.model.card.ICard;
 
 import java.util.Collection;
 import java.util.Stack;
 
-public class LeftBar {
-    private final Stack<ICard> toUse;
+public class StockPanel {
+    private final Stack<ICard> toUse = new Stack<>();
     private final Stack<ICard> rightCards = new Stack<>();
 
-
-
-    public LeftBar(Collection<ICard> list) {
-        toUse = new Stack<>();
+    public StockPanel(Collection<ICard> list) {
         toUse.push(new EmptyCard());
         for (ICard card : list) {
             toUse.push(card);
@@ -37,11 +34,7 @@ public class LeftBar {
     }
 
     public ICard getLeftStack(){
-        return toUse.get(toUse.size()-1);
-    }
-
-    public boolean isEmpty() {
-        return toUse.size()==1;
+        return toUse.peek();
     }
 
     private void reschuffle(){
@@ -56,7 +49,6 @@ public class LeftBar {
     public boolean searchCard(ICard cardMoved) {
         for (ICard card : rightCards) {
             if (card.equals(cardMoved)) {
-//                rightCards.remove(card);
                 return true;
             }
         }

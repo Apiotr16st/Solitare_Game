@@ -1,14 +1,15 @@
-package org.example;
+package org.example.util;
 
 import javafx.scene.image.Image;
-import org.example.card.ICard;
+import org.example.controller.GameController;
+import org.example.model.card.ICard;
 
 import java.util.Objects;
 
-public class ImageController {
+public class ImageHelper {
     public static String parseImage(ICard card){
         String res = switch (card.getNumber()) {
-            case AS -> "A";
+            case ACE -> "A";
             case TWO -> "2";
             case THREE -> "3";
             case FOUR -> "4";
@@ -18,16 +19,16 @@ public class ImageController {
             case EIGHT -> "8";
             case NINE -> "9";
             case TEN -> "10";
-            case WALET -> "J";
+            case JACK -> "J";
             case QUEEN -> "Q";
             case KING -> "K";
             default -> "ERROR";
         };
         String res2 = switch (card.getColor()) {
-            case PIK -> "S";
-            case KIER -> "H";
-            case TREFL -> "C";
-            case KARO -> "D";
+            case SPADE -> "S";
+            case HEART -> "H";
+            case CLUB -> "C";
+            case DIAMOND -> "D";
             default -> "ERROR";
         };
         return "/images/" + res + res2 + ".png";

@@ -1,30 +1,33 @@
-package org.example;
+package org.example.controller;
 
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import org.example.bar.stack.FinalStack;
-import org.example.card.Card;
-import org.example.card.EmptyCard;
-import org.example.card.ICard;
-import org.example.bar.stack.TableStack;
-import org.example.card.Number;
+import org.example.GameLogic;
+import org.example.model.stack.FinalStack;
+import org.example.model.card.Card;
+import org.example.model.card.EmptyCard;
+import org.example.model.card.ICard;
+import org.example.model.stack.TableStack;
+
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 
 public class GameController implements Initializable {
     public HBox stackPanes;
     public HBox usedStacks;
     public HBox toUseStack;
+    public Button undoMove;
     private ICard clicked = null;
     private final GameLogic game = new GameLogic();
-    private ArrayList<TableStack> tb = game.getTable();
+    private final ArrayList<TableStack> tb = game.getTable();
     private final StackPane toUsePane = new StackPane();
     private final StackPane rightCardPane = new StackPane() ;
     private final ArrayList<FinalStack> finalStacks = game.getFinalStacks();
@@ -51,7 +54,7 @@ public class GameController implements Initializable {
     private void drawMiddleCards(){
         for (int i=0; i<7; i++){
             TableStack stack = tb.get(i);
-            ArrayList<ICard> cards = (ArrayList<ICard>) stack.getCards();
+            Stack<ICard> cards = stack.getCards();
             int movment = 0;
             int base = 0;
             StackPane pane = new StackPane();

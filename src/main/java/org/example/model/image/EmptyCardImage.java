@@ -1,14 +1,14 @@
-package org.example.card;
+package org.example.model.image;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.example.ImageController;
+import org.example.util.ImageHelper;
 
 public class EmptyCardImage implements ICardImage {
     private final ImageView view;
 
     public EmptyCardImage() {
-        Image img = ImageController.loadFieldImage();
+        Image img = ImageHelper.loadFieldImage();
         this.view = new ImageView(img);
         view.setFitWidth(130);
         view.setPreserveRatio(true);

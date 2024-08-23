@@ -1,6 +1,10 @@
-package org.example.card;
+package org.example.model.card;
 
-public class EmptyCard implements ICard{
+import org.example.model.Color;
+import org.example.model.Number;
+import org.example.model.image.EmptyCardImage;
+
+public class EmptyCard implements ICard {
     private final EmptyCardImage cardImage;
     private final Number number;
     private final Color color;
@@ -8,8 +12,8 @@ public class EmptyCard implements ICard{
 
     public EmptyCard() {
         this.cardImage = new EmptyCardImage();
-        this.number = Number.EMPTY;
-        this.color = Color.GRAY;
+        this.number = Number.NONE;
+        this.color = Color.NONE;
     }
 
     @Override

@@ -1,8 +1,9 @@
-package org.example.card;
+package org.example.model.image;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-import org.example.ImageController;
+import org.example.model.card.ICard;
+import org.example.util.ImageHelper;
 
 
 public class CardImage implements ICardImage {
@@ -11,8 +12,8 @@ public class CardImage implements ICardImage {
     private final Image back;
 
     public CardImage(ICard card) {
-        this.front = ImageController.loadImage(card);
-        this.back  = ImageController.loadBackImage();
+        this.front = ImageHelper.loadImage(card);
+        this.back  = ImageHelper.loadBackImage();
         this.view = new ImageView(back);
         view.setFitWidth(130);
         view.setPreserveRatio(true);

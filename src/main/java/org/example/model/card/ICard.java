@@ -1,4 +1,8 @@
-package org.example.card;
+package org.example.model.card;
+
+import org.example.model.Color;
+import org.example.model.Number;
+import org.example.model.image.ICardImage;
 
 public interface ICard {
     Color getColor();

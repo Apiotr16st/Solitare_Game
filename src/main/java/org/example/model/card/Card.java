@@ -1,4 +1,8 @@
-package org.example.card;
+package org.example.model.card;
+
+import org.example.model.Color;
+import org.example.model.Number;
+import org.example.model.image.CardImage;
 
 public class Card implements ICard {
     private final Number number;
@@ -24,9 +28,9 @@ public class Card implements ICard {
     @Override
     public boolean colorCompare(ICard cardMoved) {
         return switch (this.color) {
-            case PIK, TREFL -> cardMoved.getColor() == Color.KARO  || cardMoved.getColor() == Color.KIER;
-            case KARO, KIER -> cardMoved.getColor() == Color.PIK || cardMoved.getColor() == Color.TREFL;
-            case GRAY -> true;
+            case SPADE, CLUB -> cardMoved.getColor() == Color.DIAMOND || cardMoved.getColor() == Color.HEART;
+            case DIAMOND, HEART -> cardMoved.getColor() == Color.SPADE || cardMoved.getColor() == Color.CLUB;
+            case NONE -> true;
         };
     }
 

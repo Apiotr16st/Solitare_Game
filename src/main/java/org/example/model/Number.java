@@ -1,10 +1,10 @@
-package org.example.card;
+package org.example.model;
 
 public enum Number {
-    EMPTY(14),
+    NONE(14),
     KING(13),
     QUEEN(12),
-    WALET(11),
+    JACK(11),
     TEN(10),
     NINE(9),
     EIGHT(8),
@@ -14,7 +14,7 @@ public enum Number {
     FOUR(4),
     THREE(3),
     TWO(2),
-    AS(1);
+    ACE(1);
 
     private final int i;
     Number(int i)  {

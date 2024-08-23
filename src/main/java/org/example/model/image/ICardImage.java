@@ -1,4 +1,4 @@
-package org.example.card;
+package org.example.model.image;
 
 import javafx.scene.image.ImageView;
 

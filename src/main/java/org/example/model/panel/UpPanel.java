@@ -1,15 +1,15 @@
-package org.example.bar;
+package org.example.model.panel;
 
-import org.example.bar.stack.FinalStack;
-import org.example.card.ICard;
+import org.example.model.stack.FinalStack;
+import org.example.model.card.ICard;
 
 import java.util.ArrayList;
 
 
-public class UsedBar {
-    private ArrayList<FinalStack> stacks;
+public class UpPanel {
+    private final ArrayList<FinalStack> stacks;
 
-    public UsedBar() {
+    public UpPanel() {
         this.stacks = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             this.stacks.add(new FinalStack());

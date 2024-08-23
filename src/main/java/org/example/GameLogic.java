@@ -1,77 +1,77 @@
 package org.example;
 
-import org.example.bar.LeftBar;
-import org.example.bar.UsedBar;
-import org.example.bar.stack.FinalStack;
-import org.example.card.ICard;
-import org.example.card.Tail;
-import org.example.bar.stack.TableStack;
-import org.example.bar.TableBar;
+import org.example.model.panel.StockPanel;
+import org.example.model.panel.UpPanel;
+import org.example.model.stack.FinalStack;
+import org.example.model.card.ICard;
+import org.example.model.Deck;
+import org.example.model.stack.TableStack;
+import org.example.model.panel.TablePanel;
 
 import java.util.ArrayList;
 
 public class GameLogic {
 
-    private final TableBar tableBar;
-    private final LeftBar leftBar;
-    private final UsedBar usedBar;
+    private final TablePanel tablePanel;
+    private final StockPanel stockPanel;
+    private final UpPanel upPanel;
 
     public GameLogic() {
-        Tail tail = new Tail();
-        this.tableBar = new TableBar((ArrayList<ICard>) tail.getCards(28));
-        this.leftBar = new LeftBar(tail.getCards());
-        this.usedBar = new UsedBar();
+        Deck deck = new Deck();
+        this.tablePanel = new TablePanel((ArrayList<ICard>) deck.getCards(28));
+        this.stockPanel = new StockPanel(deck.getCards());
+        this.upPanel = new UpPanel();
     }
 
     public ArrayList<TableStack> getTable(){
-        return this.tableBar.getStacks();
+        return this.tablePanel.getStacks();
     }
 
     public void moveCard(ICard cardTo, ICard cardMoved) {
-        boolean movedOnTable = tableBar.searchCard(cardMoved);
-        boolean movedOnLeft = leftBar.searchCard(cardMoved);
-        boolean movedOnUsed = usedBar.searchCard(cardMoved);
+        boolean movedOnTable = tablePanel.searchCard(cardMoved);
+        boolean movedOnStock = stockPanel.searchCard(cardMoved);
+        boolean movedOnUp = upPanel.searchCard(cardMoved);
 
-        boolean toOnTable = tableBar.searchCard(cardTo);
-        boolean toOnUsed = usedBar.searchCard(cardTo);
+        boolean toOnTable = tablePanel.searchCard(cardTo);
+        boolean toOnUp = upPanel.searchCard(cardTo);
 
         if (movedOnTable && toOnTable) {
             TableStack stackMoved;
-            TableStack stack = tableBar.searchStack(cardTo);
-            stackMoved = tableBar.searchStack(cardMoved);
+            TableStack stack = tablePanel.searchStack(cardTo);
+            stackMoved = tablePanel.searchStack(cardMoved);
             for (ICard card : stackMoved.getCardsFrom(cardMoved)) {
                 if(stack.addCard(card)){
                     stackMoved.removeCard(card);
                 }
             }
         }
-        else if (movedOnTable && toOnUsed){
-            TableStack stack = tableBar.searchStack(cardMoved);
+        else if (movedOnTable && toOnUp){
+            TableStack stack = tablePanel.searchStack(cardMoved);
             if(stack.getCardsFrom(cardMoved).size() > 1){
                 return;
             }
-            FinalStack stackMoved = usedBar.searchStack(cardTo);
+            FinalStack stackMoved = upPanel.searchStack(cardTo);
             if(stackMoved.addCard(cardMoved)){
                 stack.removeCard(cardMoved);
             }
         }
-        else if (movedOnUsed && toOnTable){
-            FinalStack stack = usedBar.searchStack(cardMoved);
-            TableStack stackMoved = tableBar.searchStack(cardTo);
+        else if (movedOnUp && toOnTable){
+            FinalStack stack = upPanel.searchStack(cardMoved);
+            TableStack stackMoved = tablePanel.searchStack(cardTo);
             if(stackMoved.addCard(cardMoved)){
                 stack.removeCard(cardMoved);
             }
         }
-        else if (movedOnLeft && toOnTable){
-            TableStack stack = tableBar.searchStack(cardTo);
+        else if (movedOnStock && toOnTable){
+            TableStack stack = tablePanel.searchStack(cardTo);
             if (stack.addCard(cardMoved)) {
-               leftBar.removeCard(cardMoved);
+               stockPanel.removeCard(cardMoved);
             }
         }
-        else if (movedOnLeft && toOnUsed){
-            FinalStack stack = usedBar.searchStack(cardTo);
+        else if (movedOnStock && toOnUp){
+            FinalStack stack = upPanel.searchStack(cardTo);
             if (stack.addCard(cardMoved)) {
-                leftBar.removeCard(cardMoved);
+                stockPanel.removeCard(cardMoved);
             }
         }
         else {
@@ -80,18 +80,18 @@ public class GameLogic {
     }
 
     public void nextCard(){
-        leftBar.nextCard();
+        stockPanel.nextCard();
     }
 
     public ICard getFirstRightCard(){
-        return leftBar.getFirstRightCard();
+        return stockPanel.getFirstRightCard();
     }
 
     public ICard getLeftStack(){
-        return leftBar.getLeftStack();
+        return stockPanel.getLeftStack();
     }
 
     public ArrayList<FinalStack> getFinalStacks() {
-        return usedBar.getStacks();
+        return upPanel.getStacks();
     }
 }

@@ -1,14 +1,17 @@
-package org.example.card;
+package org.example.model;
+
+import org.example.model.card.Card;
+import org.example.model.card.ICard;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class Tail {
+public class Deck {
     private ArrayList<ICard> cards;
 
-    public Tail(){
+    public Deck(){
         this.cards = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {

@@ -1,16 +1,14 @@
-package org.example.bar;
+package org.example.model.panel;
 
-import org.example.card.Card;
-import org.example.bar.stack.TableStack;
-import org.example.card.EmptyCard;
-import org.example.card.ICard;
+import org.example.model.stack.TableStack;
+import org.example.model.card.ICard;
 
 import java.util.ArrayList;
 
-public class TableBar {
+public class TablePanel {
     private final ArrayList<TableStack> stacks;
 
-    public TableBar(ArrayList<ICard> cards) {
+    public TablePanel(ArrayList<ICard> cards) {
         this.stacks = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             this.stacks.add(new TableStack());
@@ -32,17 +30,6 @@ public class TableBar {
 
     public ArrayList<TableStack> getStacks() {
         return stacks;
-    }
-
-    @Override
-    public String toString() {
-        return "Table stacks=" + stacks.get(0) + "\n"
-                + stacks.get(1) + "\n"
-                + stacks.get(2) + "\n"
-                + stacks.get(3) + "\n"
-                + stacks.get(4) + "\n"
-                + stacks.get(5) + "\n"
-                + stacks.get(6) + "\n";
     }
 
     public boolean searchCard(ICard cardMoved) {
