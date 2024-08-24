@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Stack;
 
-public class TableStack extends AbstractStack {
+public class TableStack extends AbstractStack implements IStack {
     public TableStack() {
         super();
     }
@@ -49,5 +49,11 @@ public class TableStack extends AbstractStack {
     public void removeCard(ICard card) {
         super.removeCard(card);
         getUpCard().setHiddnes(false);
+    }
+
+    @Override
+    public boolean addCardBack(ICard card) {
+        getUpCard().setHiddnes(true);
+        return super.addCardBack(card);
     }
 }

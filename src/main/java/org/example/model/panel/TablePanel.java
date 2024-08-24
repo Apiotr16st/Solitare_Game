@@ -1,15 +1,15 @@
 package org.example.model.panel;
 
+import org.example.model.stack.IStack;
 import org.example.model.stack.TableStack;
 import org.example.model.card.ICard;
 
 import java.util.ArrayList;
 
-public class TablePanel {
-    private final ArrayList<TableStack> stacks;
+public class TablePanel extends AbstractPanel {
 
     public TablePanel(ArrayList<ICard> cards) {
-        this.stacks = new ArrayList<>();
+        super();
         for (int i = 0; i < 7; i++) {
             this.stacks.add(new TableStack());
         }
@@ -28,22 +28,10 @@ public class TablePanel {
 
     }
 
-    public ArrayList<TableStack> getStacks() {
-        return stacks;
-    }
-
-    public boolean searchCard(ICard cardMoved) {
-        for (TableStack stack : stacks) {
-            if (stack.getCards().contains(cardMoved)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public TableStack searchStack(ICard cardTo) {
-        for (TableStack stack : stacks) {
-            if (stack.getCards().contains(cardTo)) {
+    @Override
+    public IStack searchStack(ICard cardTo) {
+        for (IStack stack : stacks) {
+            if (stack.containsCard(cardTo)) {
                 return stack;
             }
         }

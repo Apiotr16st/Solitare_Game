@@ -6,11 +6,14 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import org.example.GameLogic;
+import org.example.game.GameLogic;
+import org.example.model.CardPlace;
+import org.example.model.Move;
 import org.example.model.stack.FinalStack;
 import org.example.model.card.Card;
 import org.example.model.card.EmptyCard;
 import org.example.model.card.ICard;
+import org.example.model.stack.IStack;
 import org.example.model.stack.TableStack;
 
 
@@ -26,21 +29,24 @@ public class GameController implements Initializable {
     public HBox toUseStack;
     public Button undoMove;
     private ICard clicked = null;
+    private CardPlace place = null;
     private final GameLogic game = new GameLogic();
-    private final ArrayList<TableStack> tb = game.getTable();
     private final StackPane toUsePane = new StackPane();
     private final StackPane rightCardPane = new StackPane() ;
-    private final ArrayList<FinalStack> finalStacks = game.getFinalStacks();
 
     public void initialize(URL location, ResourceBundle resources){
         drawApp();
+        undoMove.setOnAction(e -> {
+            game.undoMove();
+            drawApp();
+        });
     }
 
     private void drawApp(){
         clear();
-        drawMiddleCards();
+        drawTableCards();
         drawTopCards();
-        drawToUseStack();
+        drawStock();
     }
 
     private void clear(){
@@ -51,9 +57,10 @@ public class GameController implements Initializable {
         rightCardPane.getChildren().clear();
     }
 
-    private void drawMiddleCards(){
+    private void drawTableCards(){
+        ArrayList<IStack> tb = game.getTable();
         for (int i=0; i<7; i++){
-            TableStack stack = tb.get(i);
+            TableStack stack = (TableStack) tb.get(i);
             Stack<ICard> cards = stack.getCards();
             int movment = 0;
             int base = 0;
@@ -64,7 +71,7 @@ public class GameController implements Initializable {
                 int extra = 0;
                 if(!card.isHidden()){
                     view.setOnMouseClicked(e -> {
-                        cardClicked(card);
+                        cardClicked(card, CardPlace.TABLE);
                     });
                     view.setCursor(Cursor.HAND);
                     extra = 20;
@@ -84,13 +91,14 @@ public class GameController implements Initializable {
 
     private void drawTopCards(){
         for (int i=0; i<4; i++){
+            ArrayList<IStack> finalStacks = game.getUpStack();
             StackPane pane = new StackPane();
-            FinalStack stack = finalStacks.get(i);
-
+            FinalStack stack = (FinalStack) finalStacks.get(i);
+            stack.getUpCard().getCardImage().setMovement(0);
             ImageView view = stack.getUpCard().getCardImage().getView();
             view.setOnMouseClicked(e -> {
                 view.setCursor(Cursor.HAND);
-                cardClicked(stack.getUpCard());
+                cardClicked(stack.getUpCard(), CardPlace.UP);
             });
 
             pane.getChildren().add(view);
@@ -98,52 +106,54 @@ public class GameController implements Initializable {
         }
     }
 
-    private void drawToUseStack(){
-        ImageView toUse = game.getLeftStack().getCardImage().getView();
-        ImageView rightCard = game.getFirstRightCard().getCardImage().getView();
+    private void drawStock(){
+        ArrayList<IStack> stockStacks = game.getStock();
+        ICard toUse = stockStacks.get(0).getUpCard();
+        ICard rightCard = stockStacks.get(1).getUpCard();
 
-        toUse.setOnMouseClicked(e -> {
+        toUse.getCardImage().setMovement(0);
+        rightCard.getCardImage().setMovement(0);
+
+        ImageView toUseView = toUse.getCardImage().getView();
+        ImageView rightCardView = rightCard.getCardImage().getView();
+
+        toUseView.setOnMouseClicked(e -> {
             toUseStackClicked();
         });
-        toUse.setCursor(Cursor.HAND);
+        toUseView.setCursor(Cursor.HAND);
 
-        if(game.getFirstRightCard() instanceof Card){
-            rightCard.setCursor(Cursor.HAND);
-            rightCard.setOnMouseClicked(e -> {
-                cardClicked(game.getFirstRightCard());
+        if(rightCard instanceof Card){
+            rightCardView.setCursor(Cursor.HAND);
+            rightCardView.setOnMouseClicked(e -> {
+                cardClicked(rightCard, CardPlace.STOCK);
             });
         }
 
-        toUsePane.getChildren().add(toUse);
-        rightCardPane.getChildren().add(rightCard);
+        toUsePane.getChildren().add(toUseView);
+        rightCardPane.getChildren().add(rightCardView);
         toUseStack.getChildren().add(toUsePane);
         toUseStack.getChildren().add(rightCardPane);
     }
 
-    private void cardClicked(ICard cardImage){
-        if(cardImage instanceof EmptyCard && clicked == null){
+    private void cardClicked(ICard card, CardPlace cardPlace){
+        if(card instanceof EmptyCard && clicked == null){
             return;
         }
-        if(clicked == cardImage){
+        if(clicked == card){
             clicked.getCardImage().getView().setOpacity(1);
             clicked = null;
+            place = null;
         }
         else if(clicked == null){
-            clicked = cardImage;
-            cardImage.getCardImage().getView().setOpacity(0.8);
+            clicked = card;
+            place = cardPlace;
+            card.getCardImage().getView().setOpacity(0.8);
         }
         else{
-            try{
-                game.moveCard(cardImage, clicked);
-            }
-            catch (IllegalArgumentException e){
-                clicked.getCardImage().getView().setOpacity(1);
-                clicked = null;
-                return;
-            }
-
+            game.moveCard(new Move(card, clicked, cardPlace, place));
             clicked.getCardImage().getView().setOpacity(1);
             clicked = null;
+            place = null;
             drawApp();
         }
     }
@@ -152,6 +162,7 @@ public class GameController implements Initializable {
         if(clicked != null){
             clicked.getCardImage().getView().setOpacity(1);
             clicked = null;
+            place = null;
         }
         game.nextCard();
         drawApp();

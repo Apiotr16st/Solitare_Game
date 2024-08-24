@@ -1,61 +1,56 @@
 package org.example.model.panel;
 
-import org.example.model.card.EmptyCard;
 import org.example.model.card.ICard;
+import org.example.model.stack.IStack;
+import org.example.model.stack.StockStack;
 
 import java.util.Collection;
-import java.util.Stack;
 
-public class StockPanel {
-    private final Stack<ICard> toUse = new Stack<>();
-    private final Stack<ICard> rightCards = new Stack<>();
+public class StockPanel extends AbstractPanel{
+    private final IStack toUse = new StockStack();
+    private final IStack rightCards = new StockStack();
 
     public StockPanel(Collection<ICard> list) {
-        toUse.push(new EmptyCard());
+        super();
+        this.stacks.add(toUse);
+        this.stacks.add(rightCards);
         for (ICard card : list) {
-            toUse.push(card);
+            toUse.addCardToStart(card);
         }
-        rightCards.add(new EmptyCard());
     }
 
     public void nextCard(){
         if(toUse.size() == 1){
-            reschuffle();
+            reschuffle(toUse, rightCards);
         }
         else {
-            ICard card = toUse.pop();
+            ICard card = toUse.getUpCard();
+            toUse.removeCard(card);
             card.setHiddnes(false);
-            rightCards.push(card);
+            rightCards.addCard(card);
         }
     }
 
-    public ICard getFirstRightCard(){
-        return rightCards.get(rightCards.size()-1);
-    }
-
-    public ICard getLeftStack(){
-        return toUse.peek();
-    }
-
-    private void reschuffle(){
-        int size = rightCards.size();
-        for (int i=0; i<size-1; i++){
-            ICard card = rightCards.pop();
+    private void reschuffle(IStack emptyStack, IStack fullStack){
+        int size = fullStack.size();
+        for (int i=0; i <size-1; i++){
+            ICard card = fullStack.getUpCard();
+            fullStack.removeCard(card);
             card.setHiddnes(true);
-            toUse.push(card);
+            emptyStack.addCard(card);
         }
     }
 
-    public boolean searchCard(ICard cardMoved) {
-        for (ICard card : rightCards) {
-            if (card.equals(cardMoved)) {
-                return true;
-            }
+    public void backCard() {
+        if(rightCards.size() == 1){
+            reschuffle(rightCards, toUse);
         }
-        return false;
-    }
-
-    public void removeCard(ICard cardMoved) {
-        rightCards.remove(cardMoved);
+        else {
+            ICard card = rightCards.getUpCard();
+            rightCards.removeCard(card);
+            rightCards.getUpCard().setHiddnes(false);
+            card.setHiddnes(true);
+            toUse.addCard(card);
+        }
     }
 }
