@@ -22,30 +22,27 @@ public class ImageHelper {
             case JACK -> "J";
             case QUEEN -> "Q";
             case KING -> "K";
-            default -> "ERROR";
+            case NONE -> "gray_back";
         };
         String res2 = switch (card.getColor()) {
             case SPADE -> "S";
             case HEART -> "H";
             case CLUB -> "C";
             case DIAMOND -> "D";
-            default -> "ERROR";
+            case NONE -> "";
         };
         return "/images/" + res + res2 + ".png";
     }
 
     public static Image loadImage(ICard card){
-        return new Image(Objects.requireNonNull(
-                GameController.class.getResource(parseImage(card))).toExternalForm());
+        return new Image( ImageHelper.class.getResource(parseImage(card)).toExternalForm());
     }
 
     public static Image loadFieldImage() {
-        return new Image(Objects.requireNonNull(
-                GameController.class.getResource("/images/gray_back.png")).toExternalForm());
+        return new Image( ImageHelper.class.getResource("/images/gray_back.png").toExternalForm());
     }
 
     public static Image loadBackImage(){
-        return new Image(Objects.requireNonNull(
-                GameController.class.getResource("/images/red_back.png")).toExternalForm());
+        return new Image( ImageHelper.class.getResource("/images/red_back.png").toExternalForm() );
     }
 }

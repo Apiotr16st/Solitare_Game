@@ -19,12 +19,20 @@ public class GameLogic {
     private final StockPanel stockPanel;
     private final UpPanel upPanel;
     private final MoveHistory moveHistory = new MoveHistory();
+    private final Collection<ICard> cards = new ArrayList<>();
 
     public GameLogic() {
         Deck deck = new Deck();
         this.tablePanel = new TablePanel((ArrayList<ICard>) deck.getCards(28));
         this.stockPanel = new StockPanel(deck.getCards());
         this.upPanel = new UpPanel();
+    }
+
+    public Collection<ICard> getCards() {
+        cards.addAll(tablePanel.getCards());
+        cards.addAll(stockPanel.getCards());
+        cards.addAll(upPanel.getCards());
+        return cards;
     }
 
     public ArrayList<IStack> getTable(){
@@ -86,13 +94,13 @@ public class GameLogic {
             TableStack stack = (TableStack) stackMoved;
             Collection<ICard> cards = stack.getCardsFrom(cardMoved);
             for(ICard card : cards){
-                if(stackFrom.addCardBack(card)){
+                if(stackFrom.addCardDirectly(card)){
                     stackMoved.removeCard(card);
                 }
             }
         }
         else {
-            if(stackFrom.addCardBack(cardMoved)) {
+            if(stackFrom.addCardDirectly(cardMoved)) {
                 stackMoved.removeCard(cardMoved);
             }
         }

@@ -1,5 +1,7 @@
 package org.example.model.stack;
 
+import org.example.model.Color;
+import org.example.model.Number;
 import org.example.model.card.EmptyCard;
 import org.example.model.card.ICard;
 
@@ -10,20 +12,32 @@ public abstract class AbstractStack implements IStack {
 
     public AbstractStack() {
         this.cards = new Stack<>();
-        addCardToStart(new EmptyCard());
+        this.cards.push(new EmptyCard());
     }
 
     @Override
     abstract public boolean addCard(ICard card);
 
     @Override
-    public void addCardToStart(ICard card) {
+    public boolean addCardDirectly(ICard card) {
+        if(checkCard(card)){
+            return false;
+        }
+
         this.cards.push(card);
+        return true;
+    }
+
+    boolean checkCard(ICard card){
+        if(card == null){
+            return true;
+        }
+        return card.getNumber() == Number.NONE || card.getColor() == Color.NONE;
     }
 
     @Override
-    public void removeCard(ICard card){
-        this.cards.remove(card);
+    public boolean removeCard(ICard card){
+        return this.cards.remove(card);
     }
 
     @Override
@@ -42,13 +56,12 @@ public abstract class AbstractStack implements IStack {
     }
 
     @Override
-    public boolean addCardBack(ICard card) {
-        this.cards.push(card);
-        return true;
+    public String toString() {
+        return cards.toString();
     }
 
     @Override
-    public String toString() {
-        return cards.toString();
+    public Stack<ICard> getCards() {
+        return this.cards;
     }
 }

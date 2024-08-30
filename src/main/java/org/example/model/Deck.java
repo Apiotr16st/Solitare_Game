@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class Deck {
-    private ArrayList<ICard> cards;
+    private final ArrayList<ICard> cards;
 
     public Deck(){
         this.cards = new ArrayList<>();
@@ -24,6 +24,9 @@ public class Deck {
     }
 
     public Collection<ICard> getCards(int i) {
+        if(i < 0 || i > cards.size()){
+            throw new IllegalArgumentException("Invalid number of cards");
+        }
         Iterator<ICard> iterator = cards.iterator();
         Collection<ICard> removed_cards = new ArrayList<>();
         while (iterator.hasNext() && i > 0) {
@@ -39,10 +42,5 @@ public class Deck {
         Collection<ICard> removed_cards = new ArrayList<>(cards);
         cards.clear();
         return removed_cards;
-    }
-
-    @Override
-    public String toString() {
-        return "Tail cards=" + cards;
     }
 }

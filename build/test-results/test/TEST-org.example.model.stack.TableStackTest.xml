@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.model.stack.TableStackTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2024-08-30T20:26:08" hostname="DESKTOP-4QPQ83C" time="0.012">
+  <properties/>
+  <testcase name="addCardDirectly()" classname="org.example.model.stack.TableStackTest" time="0.001"/>
+  <testcase name="addCardWithSameColors()" classname="org.example.model.stack.TableStackTest" time="0.0"/>
+  <testcase name="addCardWithDifferentColors()" classname="org.example.model.stack.TableStackTest" time="0.0"/>
+  <testcase name="addWrongCard()" classname="org.example.model.stack.TableStackTest" time="0.001"/>
+  <testcase name="tableStackInitialization()" classname="org.example.model.stack.TableStackTest" time="0.001"/>
+  <testcase name="addWrongCardDirectly()" classname="org.example.model.stack.TableStackTest" time="0.001"/>
+  <testcase name="getCardsTest()" classname="org.example.model.stack.TableStackTest" time="0.0"/>
+  <testcase name="size()" classname="org.example.model.stack.TableStackTest" time="0.0"/>
+  <testcase name="addCardCorrectly()" classname="org.example.model.stack.TableStackTest" time="0.0"/>
+  <testcase name="testRemoveCard()" classname="org.example.model.stack.TableStackTest" time="0.0"/>
+  <testcase name="testGetCardsFrom()" classname="org.example.model.stack.TableStackTest" time="0.0"/>
+  <testcase name="getUpCard()" classname="org.example.model.stack.TableStackTest" time="0.001"/>
+  <testcase name="addCardToEmptyStack()" classname="org.example.model.stack.TableStackTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.model.card.CardTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-08-30T20:26:08" hostname="DESKTOP-4QPQ83C" time="0.008">
+  <properties/>
+  <testcase name="cardColorCompare()" classname="org.example.model.card.CardTest" time="0.002"/>
+  <testcase name="isHiddnen()" classname="org.example.model.card.CardTest" time="0.0"/>
+  <testcase name="illegalCardInitialization()" classname="org.example.model.card.CardTest" time="0.002"/>
+  <testcase name="cardInitialization()" classname="org.example.model.card.CardTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

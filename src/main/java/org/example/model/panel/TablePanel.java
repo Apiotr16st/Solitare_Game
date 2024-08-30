@@ -21,7 +21,7 @@ public class TablePanel extends AbstractPanel {
                 if(j == i) {
                     cards.get(cardIndex).setHiddnes(false);
                 }
-                this.stacks.get(i).addCardToStart(cards.get(cardIndex));
+                this.stacks.get(i).addCardDirectly(cards.get(cardIndex));
                 cardIndex++;
             }
         }

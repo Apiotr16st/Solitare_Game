@@ -4,20 +4,18 @@ import org.example.model.card.ICard;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Stack;
 
 public class TableStack extends AbstractStack implements IStack {
     public TableStack() {
         super();
     }
 
-    public Stack<ICard> getCards() {
-        return this.cards;
-    }
-
     @Override
     public boolean addCard(ICard card) {
-        if(this.cards.size() == 1 && card.getNumber().getI() == 13){
+        if(checkCard(card)){
+            return false;
+        }
+        else if(this.cards.size() == 1 && card.getNumber().getI() == 13){
             this.cards.push(card);
             return true;
         }
@@ -28,6 +26,12 @@ public class TableStack extends AbstractStack implements IStack {
         else{
             return false;
         }
+    }
+
+    @Override
+    public boolean addCardDirectly(ICard card) {
+        getUpCard().setHiddnes(true);
+        return super.addCardDirectly(card);
     }
 
     public Collection<ICard> getCardsFrom(ICard card) {
@@ -46,14 +50,12 @@ public class TableStack extends AbstractStack implements IStack {
     }
 
     @Override
-    public void removeCard(ICard card) {
-        super.removeCard(card);
-        getUpCard().setHiddnes(false);
-    }
-
-    @Override
-    public boolean addCardBack(ICard card) {
-        getUpCard().setHiddnes(true);
-        return super.addCardBack(card);
+    public boolean removeCard(ICard card) {
+        boolean check = super.removeCard(card);
+        if(check){
+            getUpCard().setHiddnes(false);
+            return true;
+        }
+        return false;
     }
 }

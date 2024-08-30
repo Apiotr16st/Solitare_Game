@@ -9,13 +9,15 @@ public class StockStack extends AbstractStack implements IStack {
 
     @Override
     public boolean addCard(ICard card) {
+        if(checkCard(card)){
+            return false;
+        }
         cards.push(card);
         return true;
     }
 
     @Override
-    public boolean addCardBack(ICard card) {
-        card.getCardImage().setMovement(0);
-        return super.addCardBack(card);
+    public boolean addCardDirectly(ICard card) {
+        return super.addCardDirectly(card);
     }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.model.card.EmptyCardTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-08-30T20:26:08" hostname="DESKTOP-4QPQ83C" time="0.003">
+  <properties/>
+  <testcase name="cardColorCompare()" classname="org.example.model.card.EmptyCardTest" time="0.001"/>
+  <testcase name="setHiddnes()" classname="org.example.model.card.EmptyCardTest" time="0.0"/>
+  <testcase name="emptyCardInitialization()" classname="org.example.model.card.EmptyCardTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

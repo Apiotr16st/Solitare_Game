@@ -15,7 +15,7 @@ public class StockPanel extends AbstractPanel{
         this.stacks.add(toUse);
         this.stacks.add(rightCards);
         for (ICard card : list) {
-            toUse.addCardToStart(card);
+            toUse.addCardDirectly(card);
         }
     }
 

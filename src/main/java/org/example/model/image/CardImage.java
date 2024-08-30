@@ -15,8 +15,13 @@ public class CardImage implements ICardImage {
         this.front = ImageHelper.loadImage(card);
         this.back  = ImageHelper.loadBackImage();
         this.view = new ImageView(back);
-        view.setFitWidth(130);
-        view.setPreserveRatio(true);
+        String path = ImageHelper.parseImage(card);
+        if(path.equals("/images/gray_back.png")){
+            this.view.setImage(front);
+            this.view.setOpacity(0.5);
+        }
+        this.view.setFitWidth(130);
+        this.view.setPreserveRatio(true);
     }
 
     public void setMovement(int movment) {
@@ -34,5 +39,4 @@ public class CardImage implements ICardImage {
     public ImageView getView() {
         return this.view;
     }
-
 }

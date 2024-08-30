@@ -16,8 +16,10 @@ public class FinalStack extends AbstractStack implements IStack {
 
     @Override
     public boolean addCard(ICard card) {
-        card.getCardImage().setMovement(0);
-        if(this.cards.size()==1 && card.getNumber() == Number.ACE){
+        if(checkCard(card)){
+            return false;
+        }
+        else if(this.cards.size()==1 && card.getNumber() == Number.ACE){
             this.color = card.getColor();
             this.cards.push(card);
             return true;
