@@ -58,4 +58,18 @@ public class TableStack extends AbstractStack implements IStack {
         }
         return false;
     }
+
+    public ICard getPreviousCard(ICard cardMoved){
+        int i = 0;
+        for(ICard card : this.cards){
+            if(card.equals(cardMoved)){
+                break;
+            }
+            i++;
+        }
+        if(i == 0){
+            return null;
+        }
+        return this.cards.get(i - 1);
+    }
 }

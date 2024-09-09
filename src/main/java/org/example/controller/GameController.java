@@ -169,7 +169,7 @@ public class GameController implements Initializable {
             cardImages.get(card).getView().setOpacity(0.8);
         }
         else{
-            game.moveCard(new Move(card, clicked, cardPlace, place));
+            game.moveCard(new Move(clicked, place, card, cardPlace));
             cardImages.get(clicked).getView().setOpacity(1);
             clicked = null;
             place = null;

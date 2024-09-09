@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.model.stack.FinalStackTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2024-08-30T20:26:08" hostname="DESKTOP-4QPQ83C" time="0.051">
+<testsuite name="org.example.model.stack.FinalStackTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2024-09-04T08:20:49" hostname="DESKTOP-4QPQ83C" time="0.026">
   <properties/>
-  <testcase name="containsCard()" classname="org.example.model.stack.FinalStackTest" time="0.025"/>
-  <testcase name="addIllegalCardDirectly()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
-  <testcase name="addCardWrongNumber()" classname="org.example.model.stack.FinalStackTest" time="0.0"/>
-  <testcase name="addCardDirectly()" classname="org.example.model.stack.FinalStackTest" time="0.002"/>
-  <testcase name="testSize()" classname="org.example.model.stack.FinalStackTest" time="0.002"/>
+  <testcase name="containsCard()" classname="org.example.model.stack.FinalStackTest" time="0.004"/>
+  <testcase name="addIllegalCardDirectly()" classname="org.example.model.stack.FinalStackTest" time="0.0"/>
+  <testcase name="addCardWrongNumber()" classname="org.example.model.stack.FinalStackTest" time="0.002"/>
+  <testcase name="addCardDirectly()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
+  <testcase name="testSize()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
   <testcase name="addIllegalCard()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
   <testcase name="addWrongNumber()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
-  <testcase name="getCardsTest()" classname="org.example.model.stack.FinalStackTest" time="0.002"/>
+  <testcase name="getCardsTest()" classname="org.example.model.stack.FinalStackTest" time="0.0"/>
   <testcase name="addCardCorrectly()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
-  <testcase name="checkingCard()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
-  <testcase name="onlyAceCanByAddFirst()" classname="org.example.model.stack.FinalStackTest" time="0.0"/>
-  <testcase name="getUpCard()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
+  <testcase name="checkingCard()" classname="org.example.model.stack.FinalStackTest" time="0.0"/>
+  <testcase name="onlyAceCanByAddFirst()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
+  <testcase name="getUpCard()" classname="org.example.model.stack.FinalStackTest" time="0.0"/>
   <testcase name="removeCard()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
-  <testcase name="finalStackInitialization()" classname="org.example.model.stack.FinalStackTest" time="0.001"/>
+  <testcase name="finalStackInitialization()" classname="org.example.model.stack.FinalStackTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

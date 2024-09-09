@@ -48,7 +48,7 @@ public class GameLogic {
     }
 
     public void moveCard(Move move){
-        ICard cardTo = move.cardFrom();
+        ICard cardTo = move.cardTo();
         ICard cardMoved = move.cardMoved();
         CardPlace placeTo = move.placeTo();
         CardPlace placeFrom = move.placeFrom();
@@ -56,9 +56,12 @@ public class GameLogic {
         IStack stackTo = searchStack(cardTo, placeTo);
         IStack stackMoved = searchStack(cardMoved, placeFrom);
 
+        boolean hidePrevious = true;
+
         if(placeFrom == CardPlace.TABLE){
             TableStack stack = (TableStack) stackMoved;
             Collection<ICard> cards = stack.getCardsFrom(cardMoved);
+            hidePrevious = stack.getPreviousCard(cardMoved).isHidden();
             for(ICard card : cards){
                 if(stackTo.addCard(card)){
                     stackMoved.removeCard(card);
@@ -74,30 +77,39 @@ public class GameLogic {
         ICard cardFrom = stackMoved.getUpCard();
 
         if(cardFrom != null) {
-            moveHistory.addMove(new Move(cardFrom, cardMoved, placeFrom, placeTo));
+            moveHistory.addMove(new Move(cardMoved, placeTo, cardFrom, placeFrom), hidePrevious);
         }
     }
 
-    private void moveCardBack(Move move) { // to fix, moving more than 1 card at table hides the cards
-        ICard cardFrom = move.cardFrom();
+    private void moveCardBack(Move move, boolean hidePrevious) {
+        ICard cardTo = move.cardTo();
         ICard cardMoved = move.cardMoved();
 
-        if (cardFrom == null || cardMoved == null) {
+        if (cardTo == null || cardMoved == null) {
             stockPanel.backCard();
             return;
         }
 
-        IStack stackFrom = searchStack(cardFrom, move.placeTo());
+        IStack stackFrom = searchStack(cardTo, move.placeTo());
         IStack stackMoved = searchStack(cardMoved, move.placeFrom());
 
-        if(move.placeTo() == CardPlace.TABLE){
+        if(move.placeFrom() == CardPlace.TABLE){
             TableStack stack = (TableStack) stackMoved;
             Collection<ICard> cards = stack.getCardsFrom(cardMoved);
+            ICard upCard = stackFrom.getUpCard();
+
             for(ICard card : cards){
                 if(stackFrom.addCardDirectly(card)){
                     stackMoved.removeCard(card);
                 }
             }
+
+            for(ICard card : cards) {
+                if (!card.equals(cardTo)) {
+                    card.setHiddnes(false);
+                }
+            }
+            upCard.setHiddnes(hidePrevious);
         }
         else {
             if(stackFrom.addCardDirectly(cardMoved)) {
@@ -108,7 +120,7 @@ public class GameLogic {
 
     public void nextCard() {
         stockPanel.nextCard();
-        moveHistory.addMove(new Move(null, null, CardPlace.STOCK, CardPlace.STOCK));
+        moveHistory.addMove(new Move(null, CardPlace.STOCK,  null,CardPlace.STOCK), false);
     }
 
     public ArrayList<IStack> getStock(){
@@ -124,6 +136,6 @@ public class GameLogic {
         if(move == null){
             return;
         }
-        moveCardBack(move);
+        moveCardBack(move, moveHistory.undoHide());
     }
 }
