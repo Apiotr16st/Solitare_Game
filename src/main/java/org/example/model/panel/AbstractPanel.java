@@ -4,7 +4,7 @@ import org.example.model.card.ICard;
 import org.example.model.stack.IStack;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public abstract class AbstractPanel {
     final ArrayList<IStack> stacks;
@@ -26,8 +26,8 @@ public abstract class AbstractPanel {
         return null;
     }
 
-    public Collection<ICard> getCards() {
-        Collection<ICard> cards = new ArrayList<>();
+    public List<ICard> getCards() {
+        List<ICard> cards = new ArrayList<>();
         for (IStack stack : stacks) {
             cards.addAll(stack.getCards());
         }
