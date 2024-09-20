@@ -4,15 +4,19 @@ import org.example.model.stack.IStack;
 import org.example.model.stack.TableStack;
 import org.example.model.card.ICard;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TablePanel extends AbstractPanel {
 
-    public TablePanel(ArrayList<ICard> cards) {
+    public TablePanel(List<ICard> cards, List<TableStack> stacks) {
         super();
-        for (int i = 0; i < 7; i++) {
-            this.stacks.add(new TableStack());
+        if (stacks.size() != 7) {
+            throw new IllegalArgumentException("Must provide exactly 7 TableStack instances");
         }
+        if(cards.size() != 28) {
+            throw new IllegalArgumentException("Must provide exactly 28 cards");
+        }
+        this.stacks.addAll(stacks);
 
         int cardIndex = 0;
 

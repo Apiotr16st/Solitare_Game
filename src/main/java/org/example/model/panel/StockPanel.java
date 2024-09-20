@@ -5,17 +5,23 @@ import org.example.model.stack.IStack;
 import org.example.model.stack.StockStack;
 
 import java.util.Collection;
+import java.util.List;
 
 public class StockPanel extends AbstractPanel{
-    private final IStack toUse = new StockStack();
-    private final IStack rightCards = new StockStack();
+    private final IStack toUse;
+    private final IStack rightCards;
 
-    public StockPanel(Collection<ICard> list) {
+    public StockPanel(Collection<ICard> list, List<StockStack> stacks) {
         super();
+        if (stacks.size() != 2) {
+            throw new IllegalArgumentException("Must provide exactly 2 StockStack instances");
+        }
+        this.toUse = stacks.get(0);
+        this.rightCards = stacks.get(1);
         this.stacks.add(toUse);
         this.stacks.add(rightCards);
         for (ICard card : list) {
-            toUse.addCardDirectly(card);
+            this.toUse.addCardDirectly(card);
         }
     }
 
@@ -31,7 +37,7 @@ public class StockPanel extends AbstractPanel{
         }
     }
 
-    private void reschuffle(IStack emptyStack, IStack fullStack){
+    void reschuffle(IStack emptyStack, IStack fullStack){
         int size = fullStack.size();
         for (int i=0; i <size-1; i++){
             ICard card = fullStack.getUpCard();
