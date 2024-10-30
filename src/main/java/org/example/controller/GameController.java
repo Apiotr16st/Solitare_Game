@@ -1,9 +1,11 @@
 package org.example.controller;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import org.example.game.GameLogic;
@@ -27,10 +29,18 @@ import java.util.Stack;
 
 
 public class GameController implements Initializable {
-    public HBox stackPanes;
-    public HBox usedStacks;
-    public HBox toUseStack;
-    public Button undoMove;
+
+    @FXML
+    private HBox stackPanes;
+    @FXML
+    private HBox usedStacks;
+    @FXML
+    private HBox toUseStack;
+    @FXML
+    private Button undoMove;
+    @FXML
+    private BorderPane main;
+
     private ICard clicked = null;
     private CardPlace place = null;
     private final GameLogic game = new GameLogic();

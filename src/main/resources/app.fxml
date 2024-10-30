@@ -5,6 +5,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
+            fx:id="main"
             minHeight="950.0" minWidth="850.0"
             fx:controller="org.example.controller.GameController" style="-fx-background-color: green">
     <top>

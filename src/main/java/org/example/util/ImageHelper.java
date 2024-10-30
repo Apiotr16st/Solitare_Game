@@ -1,10 +1,7 @@
 package org.example.util;
 
 import javafx.scene.image.Image;
-import org.example.controller.GameController;
 import org.example.model.card.ICard;
-
-import java.util.Objects;
 
 public class ImageHelper {
     public static String parseImage(ICard card){
@@ -38,8 +35,8 @@ public class ImageHelper {
         return new Image( ImageHelper.class.getResource(parseImage(card)).toExternalForm());
     }
 
-    public static Image loadFieldImage() {
-        return new Image( ImageHelper.class.getResource("/images/gray_back.png").toExternalForm());
+    public static Image loadAcesImage() {
+        return new Image( ImageHelper.class.getResource("/images/aces.png").toExternalForm());
     }
 
     public static Image loadBackImage(){

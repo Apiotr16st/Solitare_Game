@@ -3,8 +3,12 @@ package org.example;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.example.controller.GameController;
+
+import java.util.Objects;
 
 public class App extends Application{
     @Override
@@ -19,8 +23,9 @@ public class App extends Application{
     private static void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Menu");
-//        primaryStage.getIcons().add(new Image(Objects.requireNonNull(SimulationPresenter.class.getResource("/images/paw.png")).toExternalForm()));
+        primaryStage.setTitle("Solitaire");
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(
+                GameController.class.getResource("/images/honor_clubs.png")).toExternalForm()));
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
         primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }

@@ -47,6 +47,10 @@ public class GameLogic {
         this.upPanel = new UpPanel(finalStacks);
     }
 
+    public boolean isGameWon(){
+        return upPanel.isGameWon();
+    }
+
     public Collection<ICard> getCards() {
         cards.addAll(tablePanel.getCards());
         cards.addAll(stockPanel.getCards());
