@@ -3,13 +3,10 @@ package org.example.model;
 import org.example.model.card.Card;
 import org.example.model.card.ICard;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.*;
 
 public class Deck {
-    private final ArrayList<ICard> cards;
+    private final List<ICard> cards;
 
     public Deck(){
         this.cards = new ArrayList<>();
@@ -23,24 +20,7 @@ public class Deck {
         Collections.shuffle(this.cards);
     }
 
-    public Collection<ICard> getCards(int i) {
-        if(i < 0 || i > cards.size()){
-            throw new IllegalArgumentException("Invalid number of cards");
-        }
-        Iterator<ICard> iterator = cards.iterator();
-        Collection<ICard> removed_cards = new ArrayList<>();
-        while (iterator.hasNext() && i > 0) {
-            ICard card = iterator.next();
-            removed_cards.add(card);
-            iterator.remove();
-            i--;
-        }
-        return removed_cards;
-    }
-
-    public Collection<ICard> getCards() {
-        Collection<ICard> removed_cards = new ArrayList<>(cards);
-        cards.clear();
-        return removed_cards;
+    public List<ICard> getCards() {
+        return cards;
     }
 }

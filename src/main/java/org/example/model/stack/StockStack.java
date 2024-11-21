@@ -15,9 +15,4 @@ public class StockStack extends AbstractStack implements IStack {
         cards.push(card);
         return true;
     }
-
-    @Override
-    public boolean addCardDirectly(ICard card) {
-        return super.addCardDirectly(card);
-    }
 }

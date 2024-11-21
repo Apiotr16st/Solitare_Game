@@ -6,17 +6,32 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="main"
-            minHeight="950.0" minWidth="850.0"
+            minHeight="950.0" minWidth="1250.0"
             fx:controller="org.example.controller.GameController" style="-fx-background-color: green">
     <top>
-        <VBox alignment="CENTER" spacing="20">
-            <HBox alignment="CENTER" spacing="170">
-                <HBox fx:id="toUseStack" alignment="CENTER" spacing="20"/>
-                <HBox fx:id="usedStacks" alignment="CENTER" spacing="20"/>
-            </HBox>
-            <HBox alignment="CENTER" fx:id="stackPanes" spacing="20"/>
-        </VBox>
+        <HBox alignment="CENTER" spacing="20">
+            <HBox fx:id="toUseStack" alignment="CENTER" spacing="20"/>
+            <HBox fx:id="usedStacks" alignment="CENTER" spacing="20"/>
+            <Region minWidth="130"/>
+            <HBox alignment="CENTER" fx:id="Up_stack_1" spacing="20"/>
+            <HBox alignment="CENTER" fx:id="Up_stack_2" spacing="20"/>
+            <HBox alignment="CENTER" fx:id="Up_stack_3" spacing="20"/>
+            <HBox alignment="CENTER" fx:id="Up_stack_4" spacing="20"/>
+        </HBox>
     </top>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20">
+            <HBox alignment="TOP_CENTER" spacing="20">
+                <VBox fx:id="stack_1VBox" spacing="-200"/>
+                <VBox fx:id="stack_2VBox" spacing="-200"/>
+                <VBox fx:id="stack_3VBox" spacing="-200"/>
+                <VBox fx:id="stack_4VBox" spacing="-200"/>
+                <VBox fx:id="stack_5VBox" spacing="-200"/>
+                <VBox fx:id="stack_6VBox" spacing="-200"/>
+                <VBox fx:id="stack_7VBox" spacing="-200"/>
+            </HBox>
+        </VBox>
+    </center>
     <bottom>
         <HBox alignment="CENTER" spacing="20">
             <Button fx:id="undoMove" text="undo"/>

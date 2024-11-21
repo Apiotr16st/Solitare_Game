@@ -22,7 +22,6 @@ public class GameLogic {
     private final StockPanel stockPanel;
     private final UpPanel upPanel;
     private final MoveHistory moveHistory = new MoveHistory();
-    private final Collection<ICard> cards = new ArrayList<>();
 
     public GameLogic() {
         Deck deck = new Deck();
@@ -42,8 +41,8 @@ public class GameLogic {
             finalStacks.add(new FinalStack());
         }
 
-        this.tablePanel = new TablePanel((List<ICard>) deck.getCards(28), panelStacks);
-        this.stockPanel = new StockPanel(deck.getCards(), stockStacks);
+        this.tablePanel = new TablePanel(deck.getCards().subList(0, 28), panelStacks);
+        this.stockPanel = new StockPanel(deck.getCards().subList(28,52), stockStacks);
         this.upPanel = new UpPanel(finalStacks);
     }
 
@@ -52,10 +51,11 @@ public class GameLogic {
     }
 
     public Collection<ICard> getCards() {
-        cards.addAll(tablePanel.getCards());
-        cards.addAll(stockPanel.getCards());
-        cards.addAll(upPanel.getCards());
-        return cards;
+        List<ICard> all_cards = new ArrayList<>();
+        all_cards.addAll(tablePanel.getCards());
+        all_cards.addAll(stockPanel.getCards());
+        all_cards.addAll(upPanel.getCards());
+        return all_cards;
     }
 
     private IStack searchStack(ICard card, CardPlace place){

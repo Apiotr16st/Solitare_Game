@@ -2,166 +2,162 @@ package org.example.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import org.example.game.GameLogic;
 import org.example.model.CardPlace;
 import org.example.model.Move;
-import org.example.model.image.CardImage;
-import org.example.model.image.ICardImage;
-import org.example.model.stack.FinalStack;
-import org.example.model.card.Card;
 import org.example.model.card.EmptyCard;
-import org.example.model.card.ICard;
 import org.example.model.stack.IStack;
-import org.example.model.stack.TableStack;
+import org.example.view.CardImage;
+import org.example.model.card.ICard;
 
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
 
 public class GameController implements Initializable {
 
     @FXML
-    private HBox stackPanes;
+    private VBox stack_1VBox;
+
+    @FXML
+    private VBox stack_2VBox;
+
+    @FXML
+    private VBox stack_3VBox;
+
+    @FXML
+    private VBox stack_4VBox;
+
+    @FXML
+    private VBox stack_5VBox;
+
+    @FXML
+    private VBox stack_6VBox;
+
+    @FXML
+    private VBox stack_7VBox;
+
+    @FXML
+    private HBox Up_stack_1;
+
+    @FXML
+    private HBox Up_stack_2;
+
+    @FXML
+    private HBox Up_stack_3;
+
+    @FXML
+    private HBox Up_stack_4;
+
     @FXML
     private HBox usedStacks;
+
     @FXML
     private HBox toUseStack;
+
     @FXML
     private Button undoMove;
+
     @FXML
     private BorderPane main;
 
     private ICard clicked = null;
     private CardPlace place = null;
     private final GameLogic game = new GameLogic();
-    private final StackPane toUsePane = new StackPane();
-    private final StackPane rightCardPane = new StackPane() ;
-    private final HashMap<ICard, ICardImage> cardImages = new HashMap<>();
+    private final HashMap<ICard, CardImage> cardImages = new HashMap<>();
+    private List<VBox> tableStacksList ;
+    private List<HBox> upStacksList ;
+
 
     public void initialize(URL location, ResourceBundle resources){
         for (ICard card : game.getCards()){
             cardImages.put(card, new CardImage(card));
         }
+        this.tableStacksList = List.of(stack_1VBox, stack_2VBox, stack_3VBox, stack_4VBox, stack_5VBox, stack_6VBox, stack_7VBox);
+        this.upStacksList = List.of(Up_stack_1, Up_stack_2, Up_stack_3, Up_stack_4);
 
-        drawApp();
-        undoMove.setOnAction(e -> {
-            game.undoMove();
-            drawApp();
-        });
+        undoMove.setOnAction(e -> undoMove());
+
+        updateTableStacks();
+        updateStockPanel();
+        upadteUpStacks();
     }
 
-    private void drawApp(){
-        clear();
-        drawTableCards();
-        drawTopCards();
-        drawStock();
-    }
-
-    private void clear(){
-        stackPanes.getChildren().clear();
-        usedStacks.getChildren().clear();
+    private void updateStockPanel() {
         toUseStack.getChildren().clear();
-        toUsePane.getChildren().clear();
-        rightCardPane.getChildren().clear();
+        usedStacks.getChildren().clear();
+
+        ICard toUseCard = game.getStock().get(0).getUpCard();
+        ICard usedCard = game.getStock().get(1).getUpCard();
+
+        List<ICard> list = List.of(toUseCard, usedCard);
+
+        for(ICard card : list){
+            cardImages.get(card).setTranslateY(0);
+            cardImages.get(card).reverseCard(card.isHidden());
+            toUseStack.getChildren().add(cardImages.get(card));
+        }
+
+        cardImages.get(toUseCard).setOnMouseClicked(e -> toUseStackClicked());
+        cardImages.get(toUseCard).setCursor(javafx.scene.Cursor.HAND);
+
+        setUpOnMouseClicked(usedCard, CardPlace.STOCK);
     }
 
-    private void drawTableCards(){
-        ArrayList<IStack> tb = game.getTable();
-        for (int i=0; i<7; i++){
-            TableStack stack = (TableStack) tb.get(i);
-            Stack<ICard> cards = stack.getCards();
-            int movment = 0;
-            int base = 0;
-            StackPane pane = new StackPane();
-            for (ICard card : cards){
-                base ++;
-                ICardImage cardimg = cardImages.get(card);
-                ImageView view = cardimg.getView();
-                int extra = 0;
-                if(!card.isHidden()){
-                    cardimg.setHidden(false);
-                    view.setOnMouseClicked(e -> {
-                        cardClicked(card, CardPlace.TABLE);
-                    });
-                    view.setCursor(Cursor.HAND);
-                    extra = 20;
-                }
-                else{
-                    cardimg.setHidden(true);
-                }
+    private void upadteUpStacks(){
+        for(int i = 0; i<4; i++){
+            upStacksList.get(i).getChildren().clear();
+            ICard card = game.getUpStack().get(i).getUpCard();
+            upStacksList.get(i).getChildren().add(cardImages.get(card));
+            cardImages.get(card).setTranslateY(0);
+            setUpOnMouseClicked(card, CardPlace.UP);
+        }
+    }
 
-                cardImages.get(card).setMovement(movment);
-                movment += 20;
-                if(base==1){
-                    movment = 0;
-                    extra = 0;
+    private void updateTableStacks(){
+        for(int i = 0; i<7; i++) {
+            tableStacksList.get(i).getChildren().clear();
+            IStack stack = game.getTable().get(i);
+            VBox pane = tableStacksList.get(i);
+
+            int transY = 0;
+            boolean unhide = false;
+            for(int j=0; j<stack.getCards().size(); j++){
+                ICard card = stack.getCards().get(j);
+                if(!card.isHidden()) {
+                    if(unhide)
+                        transY += 20;
+                    if(j!=0)
+                        unhide = true;
+                    setUpOnMouseClicked(card, CardPlace.TABLE);
                 }
-                movment += extra;
-                pane.getChildren().add(view);
+                pane.getChildren().add(cardImages.get(card));
+                cardImages.get(card).setTranslateY(transY);
+                transY += 20;
+                cardImages.get(card).reverseCard(card.isHidden());
             }
-            stackPanes.getChildren().add(pane);
+            cardImages.get(stack.getCards().get(0)).setTranslateY(20);
         }
     }
 
-    private void drawTopCards(){
-        for (int i=0; i<4; i++){
-            ArrayList<IStack> finalStacks = game.getUpStack();
-            StackPane pane = new StackPane();
-            FinalStack stack = (FinalStack) finalStacks.get(i);
-            cardImages.get(stack.getUpCard()).setMovement(0);
-            ImageView view = cardImages.get(stack.getUpCard()).getView();
-            view.setOnMouseClicked(e -> {
-                view.setCursor(Cursor.HAND);
-                cardClicked(stack.getUpCard(), CardPlace.UP);
-            });
-
-            pane.getChildren().add(view);
-            usedStacks.getChildren().add(pane);
+    private void update(CardPlace place){
+        switch (place){
+            case STOCK -> updateStockPanel();
+            case UP -> upadteUpStacks();
+            case TABLE -> updateTableStacks();
         }
     }
 
-    private void drawStock(){
-        ArrayList<IStack> stockStacks = game.getStock();
-        ICard toUse = stockStacks.get(0).getUpCard();
-        ICard rightCard = stockStacks.get(1).getUpCard();
-
-        ICardImage rightImg = cardImages.get(rightCard);
-        ICardImage toUseImg = cardImages.get(toUse);
-
-        toUseImg.setMovement(0);
-        rightImg.setMovement(0);
-        toUseImg.setHidden(toUse.isHidden());
-        rightImg.setHidden(rightCard.isHidden());
-
-        ImageView toUseView = toUseImg.getView();
-        ImageView rightCardView = rightImg.getView();
-
-        toUseView.setOnMouseClicked(e -> {
-            toUseStackClicked();
+    private void setUpOnMouseClicked(ICard card, CardPlace cardPlace){
+        cardImages.get(card).setOnMouseClicked(e -> {
+            cardClicked(card, cardPlace);
         });
-        toUseView.setCursor(Cursor.HAND);
-
-        if(rightCard instanceof Card){
-            rightCardView.setCursor(Cursor.HAND);
-            rightCardView.setOnMouseClicked(e -> {
-                cardClicked(rightCard, CardPlace.STOCK);
-            });
-        }
-
-        toUsePane.getChildren().add(toUseView);
-        rightCardPane.getChildren().add(rightCardView);
-        toUseStack.getChildren().add(toUsePane);
-        toUseStack.getChildren().add(rightCardPane);
+        cardImages.get(card).setCursor(javafx.scene.Cursor.HAND);
     }
 
     private void cardClicked(ICard card, CardPlace cardPlace){
@@ -169,31 +165,44 @@ public class GameController implements Initializable {
             return;
         }
         if(clicked == card){
-            cardImages.get(clicked).getView().setOpacity(1);
+            cardImages.get(clicked).setOpacity(1);
             clicked = null;
             place = null;
         }
         else if(clicked == null){
             clicked = card;
             place = cardPlace;
-            cardImages.get(card).getView().setOpacity(0.8);
+            cardImages.get(card).setOpacity(0.8);
         }
         else{
+            cardImages.get(clicked).setOpacity(1);
             game.moveCard(new Move(clicked, place, card, cardPlace));
-            cardImages.get(clicked).getView().setOpacity(1);
+            if(place == cardPlace){
+                update(place);
+            }
+            else{
+                update(place);
+                update(cardPlace);
+            }
             clicked = null;
             place = null;
-            drawApp();
         }
     }
 
-    private void toUseStackClicked(){
-        if(clicked != null){
-            cardImages.get(clicked).getView().setOpacity(1);
+    private void toUseStackClicked() {
+        if (clicked != null) {
+            cardImages.get(clicked).setOpacity(1);
             clicked = null;
             place = null;
         }
         game.nextCard();
-        drawApp();
+        updateStockPanel();
+    }
+
+    private void undoMove(){
+        game.undoMove();
+        update(CardPlace.TABLE);
+        update(CardPlace.STOCK);
+        update(CardPlace.UP);
     }
 }
