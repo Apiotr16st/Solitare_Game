@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IStack {
     boolean addCard(ICard card);
-    boolean addCardDirectly(ICard card);
+    boolean isValidateMove(ICard card);
     ICard getUpCard();
     boolean removeCard(ICard card);
     int size();

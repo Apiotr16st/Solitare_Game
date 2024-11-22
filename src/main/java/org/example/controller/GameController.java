@@ -4,9 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import org.example.game.GameLogic;
+import org.example.model.game.GameLogic;
 import org.example.model.CardPlace;
-import org.example.model.Move;
 import org.example.model.card.EmptyCard;
 import org.example.model.stack.IStack;
 import org.example.view.CardImage;
@@ -64,6 +63,9 @@ public class GameController implements Initializable {
     private Button undoMove;
 
     @FXML
+    public Button redoMove;
+
+    @FXML
     private BorderPane main;
 
     private ICard clicked = null;
@@ -82,6 +84,7 @@ public class GameController implements Initializable {
         this.upStacksList = List.of(Up_stack_1, Up_stack_2, Up_stack_3, Up_stack_4);
 
         undoMove.setOnAction(e -> undoMove());
+        redoMove.setOnAction(e -> redoMove());
 
         updateTableStacks();
         updateStockPanel();
@@ -176,7 +179,7 @@ public class GameController implements Initializable {
         }
         else{
             cardImages.get(clicked).setOpacity(1);
-            game.moveCard(new Move(clicked, place, card, cardPlace));
+            game.moveCard(clicked, place, card, cardPlace);
             if(place == cardPlace){
                 update(place);
             }
@@ -201,6 +204,13 @@ public class GameController implements Initializable {
 
     private void undoMove(){
         game.undoMove();
+        update(CardPlace.TABLE);
+        update(CardPlace.STOCK);
+        update(CardPlace.UP);
+    }
+
+    private void redoMove() {
+        game.redoMove();
         update(CardPlace.TABLE);
         update(CardPlace.STOCK);
         update(CardPlace.UP);
