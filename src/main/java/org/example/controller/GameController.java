@@ -66,12 +66,15 @@ public class GameController implements Initializable {
     public Button redoMove;
 
     @FXML
+    private Button newGame;
+
+    @FXML
     private BorderPane main;
 
     private ICard clicked = null;
     private CardPlace place = null;
-    private final GameLogic game = new GameLogic();
-    private final HashMap<ICard, CardImage> cardImages = new HashMap<>();
+    private GameLogic game = new GameLogic();
+    private HashMap<ICard, CardImage> cardImages = new HashMap<>();
     private List<VBox> tableStacksList ;
     private List<HBox> upStacksList ;
 
@@ -85,6 +88,7 @@ public class GameController implements Initializable {
 
         undoMove.setOnAction(e -> undoMove());
         redoMove.setOnAction(e -> redoMove());
+        newGame.setOnAction(e -> newGame());
 
         updateTableStacks();
         updateStockPanel();
@@ -215,4 +219,16 @@ public class GameController implements Initializable {
         update(CardPlace.STOCK);
         update(CardPlace.UP);
     }
+
+    private void newGame(){
+        this.clicked = null;
+        this.place = null;
+        this.game = new GameLogic();
+        this.cardImages = new HashMap<>();
+        initialize(null, null);
+        update(CardPlace.TABLE);
+        update(CardPlace.STOCK);
+        update(CardPlace.UP);
+    }
+
 }
