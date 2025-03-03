@@ -4,14 +4,13 @@ import org.example.model.card.ICard;
 import org.example.model.stack.IStack;
 import org.example.model.stack.StockStack;
 
-import java.util.Collection;
 import java.util.List;
 
 public class StockPanel extends AbstractPanel{
     private final IStack toUse;
     private final IStack rightCards;
 
-    public StockPanel(Collection<ICard> list, List<StockStack> stacks) {
+    public StockPanel(List<ICard> list, List<StockStack> stacks) {
         super();
         if (stacks.size() != 2) {
             throw new IllegalArgumentException("Must provide exactly 2 StockStack instances");
@@ -21,7 +20,7 @@ public class StockPanel extends AbstractPanel{
         this.stacks.add(toUse);
         this.stacks.add(rightCards);
         for (ICard card : list) {
-            this.toUse.addCardDirectly(card);
+            this.toUse.addCard(card);
         }
     }
 

@@ -1,9 +1,11 @@
 package org.example.model.stack;
 
+import org.example.model.Color;
+import org.example.model.Number;
 import org.example.model.card.ICard;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class TableStack extends AbstractStack implements IStack {
     public TableStack() {
@@ -11,30 +13,17 @@ public class TableStack extends AbstractStack implements IStack {
     }
 
     @Override
-    public boolean addCard(ICard card) {
-        if(checkCard(card)){
+    public boolean isValidateMove(ICard card) {
+        if(card == null || card.getNumber() == Number.NONE || card.getColor() == Color.NONE){
             return false;
         }
         else if(this.cards.size() == 1 && card.getNumber().getI() == 13){
-            this.cards.push(card);
             return true;
         }
-        else if(getUpCard().getNumber().getI() - 1 == card.getNumber().getI() && getUpCard().colorCompare(card)){
-            this.cards.push(card);
-            return true;
-        }
-        else{
-            return false;
-        }
+        else return getUpCard().getNumber().getI() - 1 == card.getNumber().getI() && getUpCard().colorCompare(card);
     }
 
-    @Override
-    public boolean addCardDirectly(ICard card) {
-        getUpCard().setHiddnes(true);
-        return super.addCardDirectly(card);
-    }
-
-    public Collection<ICard> getCardsFrom(ICard card) {
+    public List<ICard> getCardsFrom(ICard card) {
         ArrayList<ICard> list = new ArrayList<>();
         int i = 0;
         while(true){
